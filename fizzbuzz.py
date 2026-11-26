@@ -2,7 +2,7 @@ import sys
 
 
 def main():
-    if len(sys.argv) > 1 and sys.argv[1] in ("--help", "-h"):
+    if len(sys.argv) == 2 and sys.argv[1] in ("--help", "-h"):
         print("usage: fizzbuzz.py [N]")
         return
     if len(sys.argv) > 1:
