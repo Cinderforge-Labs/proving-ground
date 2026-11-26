@@ -1,0 +1,31 @@
+name: deploy
+# Runs after a change lands on main. The job targets the "production"
+# environment, so GitHub records a Deployment and a deployment status for the
+# exact commit. Nothing here reads pull-request or commit text.
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+  deployments: write
+jobs:
+  production:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Acceptance check on the commit being deployed
+        run: python check.py
+      - name: Build the release artifact
+        run: |
+          mkdir -p release
+          python fizzbuzz.py > release/fizzbuzz.txt
+          sha256sum release/fizzbuzz.txt | tee release/SHA256SUMS
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release
+          path: release/
