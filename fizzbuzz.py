@@ -2,6 +2,9 @@ import sys
 
 
 def main():
+    if len(sys.argv) > 1 and sys.argv[1] in ("--help", "-h"):
+        print("usage: fizzbuzz.py [N]")
+        return
     if len(sys.argv) > 1:
         try:
             upto = int(sys.argv[1])
