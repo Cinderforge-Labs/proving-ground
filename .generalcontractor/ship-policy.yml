@@ -1,0 +1,13 @@
+# Ship policy. Read only from the default branch, so a pull request cannot
+# loosen its own gate. Anything no rule covers needs an owner's approval.
+version: 1
+mode: enforce
+stop: false
+required_checks: [check]
+owners: [Ghostmacc]
+rules:
+  - id: fizzbuzz
+    paths: [fizzbuzz.py]
+    inspectors: 1
+    owner_signoff: false
+    protected: false
